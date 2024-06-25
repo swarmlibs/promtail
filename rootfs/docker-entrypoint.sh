@@ -14,7 +14,12 @@ PROMTAIL_LOGLEVEL=${PROMTAIL_LOGLEVEL:-"info"}
 PROMTAIL_LOGFORMAT=${PROMTAIL_LOGFORMAT:-"logfmt"}
 
 # The config of clients of the Promtail server
-PROMTAIL_CLIENT_URL=${PROMTAIL_CLIENT_URL:-"http://loki:3100/loki/api/v1/push"}
+# -- Loki server configuration
+GF_LOKI_SCHEME=${GF_LOKI_SCHEME:-"http"}
+GF_LOKI_PORT=${GF_LOKI_PORT:-"3100"}
+GF_LOKI_ADDR=${GF_LOKI_ADDR:-"loki:${GF_LOKI_PORT}"}
+GF_LOKI_URL=${GF_LOKI_URL:-"${GF_LOKI_SCHEME}://${GF_LOKI_ADDR}/loki/api/v1/push"}
+PROMTAIL_CLIENT_URL=${PROMTAIL_CLIENT_URL:-$GF_LOKI_URL}
 
 # -- Configures where Promtail will save it's positions file, to resume reading after restarts.
 PROMTAIL_POSITION_FILENAME=${PROMTAIL_POSITION_FILENAME:-"/promtail/positions.yaml"}
@@ -46,6 +51,9 @@ scrape_configs:
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
         refresh_interval: 10s
+
+    pipeline_stages:
+      - docker: {}
 
     relabel_configs:
       - source_labels: ['__meta_docker_container_name']
