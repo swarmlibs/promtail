@@ -16,8 +16,8 @@ PROMTAIL_LOGFORMAT=${PROMTAIL_LOGFORMAT:-"logfmt"}
 # The config of clients of the Promtail server
 # -- Loki server configuration
 GF_LOKI_SCHEME=${GF_LOKI_SCHEME:-"http"}
-GF_LOKI_HOST=${GF_LOKI_HOST:-"loki"}
-GF_LOKI_PORT=${GF_LOKI_PORT:-"3100"}
+GF_LOKI_HOST=${GF_LOKI_HOST:-"loki-gateway"}
+GF_LOKI_PORT=${GF_LOKI_PORT:-"80"}
 GF_LOKI_ADDR=${GF_LOKI_ADDR:-"${GF_LOKI_SCHEME}://${GF_LOKI_HOST}:${GF_LOKI_PORT}"}
 GF_LOKI_URL=${GF_LOKI_URL:-"${GF_LOKI_ADDR}/loki/api/v1/push"}
 PROMTAIL_CLIENT_URL=${PROMTAIL_CLIENT_URL:-$GF_LOKI_URL}
