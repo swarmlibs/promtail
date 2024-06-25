@@ -119,7 +119,10 @@ fi
 # If the user is trying to run Prometheus directly with out any arguments, then
 # pass the configuration file as the first argument.
 if [ "$1" = "" ]; then
-    set -- promtail -config.file=${PROMTAIL_CONFIG_FILE}
+    set -- promtail \
+      -config.expand-env=true \
+      -config.file=${PROMTAIL_CONFIG_FILE} \
+      -server.enable-runtime-reload
 fi
 
 echo "==> Starting Promtail..."
