@@ -103,6 +103,11 @@ scrape_configs:
         - __meta_docker_container_label_com_docker_swarm_service_name
         target_label: deployment
 
+      # Set Kubernetes's Service with "com.docker.stack.namespace" label
+      - source_labels:
+        - __meta_docker_container_label_com_docker_swarm_service_name
+        target_label: service
+
       # Set Kubernetes's Pod Name with Docker Swarm's Service Name
       - source_labels:
         - dockerswarm_task_name
